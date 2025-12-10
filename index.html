@@ -20,6 +20,7 @@
             font-family: 'Rajdhani', sans-serif;
             color: #fff;
             padding: 20px;
+            padding-bottom: 80px;
         }
         
         .container {
@@ -73,9 +74,7 @@
             border-radius: 20px;
             padding: 30px;
             backdrop-filter: blur(10px);
-            box-shadow: 
-                0 0 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .panel-title {
@@ -306,7 +305,6 @@
             background: rgba(255, 80, 80, 0.1);
         }
         
-        /* Player Card Preview */
         .preview-area {
             display: flex;
             flex-direction: column;
@@ -320,23 +318,14 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 100px rgba(255, 107, 0, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 107, 0, 0.1);
         }
         
         .card-bg-pattern {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(255, 107, 0, 0.02) 10px,
-                    rgba(255, 107, 0, 0.02) 20px
-                );
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 107, 0, 0.02) 10px, rgba(255, 107, 0, 0.02) 20px);
         }
         
         .card-glow {
@@ -495,7 +484,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* Team List */
         .team-list {
             margin-top: 30px;
             width: 100%;
@@ -640,6 +628,34 @@
             color: #888;
             margin-top: 5px;
         }
+        
+        .footer-credits {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(10, 10, 15, 0.95), transparent);
+            font-family: 'Russo One', sans-serif;
+            font-size: 1rem;
+            color: #ff6b00;
+            letter-spacing: 2px;
+        }
+        
+        .footer-credits span {
+            color: #fff;
+        }
+        
+        .footer-credits .heart {
+            color: #ff5050;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
     </style>
 </head>
 <body>
@@ -655,7 +671,7 @@
                 
                 <div class="form-group">
                     <label>Название команды</label>
-                    <input type="text" id="teamName" placeholder="NAVI, FaZe, G2..." value="LEGENDS">
+                    <input type="text" id="teamName" value="LEGENDS">
                 </div>
                 
                 <div class="form-group">
@@ -682,13 +698,12 @@
                 
                 <div class="form-group">
                     <label>Никнейм игрока</label>
-                    <input type="text" id="playerNick" placeholder="s1mple, NiKo, m0NESY...">
+                    <input type="text" id="playerNick">
                 </div>
                 
                 <div class="form-group">
                     <label>Звание</label>
                     
-                    <!-- СЕРЕБРО -->
                     <div class="rank-category">
                         <div class="rank-category-title silver">Серебро</div>
                         <div class="rank-select">
@@ -737,7 +752,6 @@
                         </div>
                     </div>
                     
-                    <!-- ЗОЛОТО -->
                     <div class="rank-category">
                         <div class="rank-category-title gold">Золотая звезда</div>
                         <div class="rank-select">
@@ -772,7 +786,6 @@
                         </div>
                     </div>
                     
-                    <!-- МАГИСТР-ХРАНИТЕЛЬ -->
                     <div class="rank-category">
                         <div class="rank-category-title master">Магистр-хранитель</div>
                         <div class="rank-select">
@@ -807,7 +820,6 @@
                         </div>
                     </div>
                     
-                    <!-- ВЫСОКИЕ РАНГИ -->
                     <div class="rank-category">
                         <div class="rank-category-title high">Высокие ранги</div>
                         <div class="rank-select">
@@ -912,12 +924,15 @@
         </div>
     </div>
     
+    <div class="footer-credits">
+        <span>by</span> alychik <span class="heart">❤</span> <span>love</span> bc.game
+    </div>
+    
     <script>
         let players = [];
         let teamAvatarSrc = null;
         let playerAvatarSrc = null;
         
-        // Загрузка аватара команды
         function setupTeamAvatarUpload() {
             document.getElementById('teamAvatar').addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -925,10 +940,7 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         teamAvatarSrc = e.target.result;
-                        document.getElementById('teamAvatarUpload').innerHTML = `
-                            <img src="${teamAvatarSrc}" alt="Team Avatar">
-                            <input type="file" id="teamAvatar" accept="image/*">
-                        `;
+                        document.getElementById('teamAvatarUpload').innerHTML = '<img src="' + teamAvatarSrc + '" alt="Team Avatar"><input type="file" id="teamAvatar" accept="image/*">';
                         setupTeamAvatarUpload();
                         updateCard();
                     };
@@ -937,7 +949,6 @@
             });
         }
         
-        // Загрузка аватара игрока
         function setupPlayerAvatarUpload() {
             document.getElementById('playerAvatar').addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -945,10 +956,7 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         playerAvatarSrc = e.target.result;
-                        document.getElementById('playerAvatarUpload').innerHTML = `
-                            <img src="${playerAvatarSrc}" alt="Player Avatar">
-                            <input type="file" id="playerAvatar" accept="image/*">
-                        `;
+                        document.getElementById('playerAvatarUpload').innerHTML = '<img src="' + playerAvatarSrc + '" alt="Player Avatar"><input type="file" id="playerAvatar" accept="image/*">';
                         setupPlayerAvatarUpload();
                         updateCard();
                     };
@@ -960,17 +968,16 @@
         setupTeamAvatarUpload();
         setupPlayerAvatarUpload();
         
-        // Обновление превью при вводе
         document.getElementById('teamName').addEventListener('input', updateCard);
         document.getElementById('playerNick').addEventListener('input', updateCard);
-        document.querySelectorAll('input[name="rank"]').forEach(r => {
+        document.querySelectorAll('input[name="rank"]').forEach(function(r) {
             r.addEventListener('change', updateCard);
         });
         
         function updateCard() {
-            const teamName = document.getElementById('teamName').value || 'LEGENDS';
-            const playerNick = document.getElementById('playerNick').value || 'PLAYER';
-            const selectedRank = document.querySelector('input[name="rank"]:checked');
+            var teamName = document.getElementById('teamName').value || 'LEGENDS';
+            var playerNick = document.getElementById('playerNick').value || 'PLAYER';
+            var selectedRank = document.querySelector('input[name="rank"]:checked');
             
             document.getElementById('cardTeamName').textContent = teamName;
             document.getElementById('cardPlayerNick').textContent = playerNick;
@@ -981,13 +988,13 @@
             }
             
             if (teamAvatarSrc) {
-                document.getElementById('cardTeamAvatar').innerHTML = `<img src="${teamAvatarSrc}" alt="Team">`;
+                document.getElementById('cardTeamAvatar').innerHTML = '<img src="' + teamAvatarSrc + '" alt="Team">';
             } else {
                 document.getElementById('cardTeamAvatar').innerHTML = '🎮';
             }
             
             if (playerAvatarSrc) {
-                document.getElementById('cardPlayerAvatar').innerHTML = `<img src="${playerAvatarSrc}" alt="Player">`;
+                document.getElementById('cardPlayerAvatar').innerHTML = '<img src="' + playerAvatarSrc + '" alt="Player">';
             } else {
                 document.getElementById('cardPlayerAvatar').innerHTML = '🎯';
             }
@@ -995,26 +1002,22 @@
         
         function clearPlayerAvatar() {
             playerAvatarSrc = null;
-            document.getElementById('playerAvatarUpload').innerHTML = `
-                <div class="file-upload-icon">👤</div>
-                <div class="file-upload-text">Игрок</div>
-                <input type="file" id="playerAvatar" accept="image/*">
-            `;
+            document.getElementById('playerAvatarUpload').innerHTML = '<div class="file-upload-icon">👤</div><div class="file-upload-text">Игрок</div><input type="file" id="playerAvatar" accept="image/*">';
             setupPlayerAvatarUpload();
             updateCard();
         }
         
         function addPlayer() {
-            const nick = document.getElementById('playerNick').value.trim();
+            var nick = document.getElementById('playerNick').value.trim();
             if (!nick) {
                 alert('Введи никнейм игрока!');
                 return;
             }
             
-            const selectedRank = document.querySelector('input[name="rank"]:checked');
-            const teamName = document.getElementById('teamName').value || 'LEGENDS';
+            var selectedRank = document.querySelector('input[name="rank"]:checked');
+            var teamName = document.getElementById('teamName').value || 'LEGENDS';
             
-            const player = {
+            var player = {
                 id: Date.now(),
                 nick: nick,
                 rankValue: selectedRank.value,
@@ -1028,48 +1031,55 @@
             players.push(player);
             updatePlayerList();
             document.getElementById('playerNick').value = '';
-            
-            // Очищаем аву игрока для следующего
             clearPlayerAvatar();
             
-            // Анимация
             document.getElementById('playerCard').style.transform = 'scale(1.02)';
-            setTimeout(() => {
+            setTimeout(function() {
                 document.getElementById('playerCard').style.transform = 'scale(1)';
             }, 200);
         }
         
         function updatePlayerList() {
-            const list = document.getElementById('playerList');
+            var list = document.getElementById('playerList');
             
             if (players.length === 0) {
                 list.innerHTML = '<div class="empty-team">Добавь первого игрока!</div>';
             } else {
-                list.innerHTML = players.map(p => `
-                    <div class="player-item" onclick="loadPlayerToCard(${p.id})">
-                        <div class="player-item-avatar">
-                            ${p.playerAvatar ? `<img src="${p.playerAvatar}" alt="${p.nick}">` : '👤'}
-                        </div>
-                        <span class="player-item-rank">${p.rankIcon}</span>
-                        <div class="player-item-info">
-                            <div class="player-item-name">${p.nick}</div>
-                            <div class="player-item-rankname">${p.rankName}</div>
-                        </div>
-                        <button class="player-item-delete" onclick="event.stopPropagation(); deletePlayer(${p.id})">✕</button>
-                    </div>
-                `).join('');
+                var html = '';
+                for (var i = 0; i < players.length; i++) {
+                    var p = players[i];
+                    html += '<div class="player-item" onclick="loadPlayerToCard(' + p.id + ')">';
+                    html += '<div class="player-item-avatar">';
+                    html += p.playerAvatar ? '<img src="' + p.playerAvatar + '" alt="' + p.nick + '">' : '👤';
+                    html += '</div>';
+                    html += '<span class="player-item-rank">' + p.rankIcon + '</span>';
+                    html += '<div class="player-item-info">';
+                    html += '<div class="player-item-name">' + p.nick + '</div>';
+                    html += '<div class="player-item-rankname">' + p.rankName + '</div>';
+                    html += '</div>';
+                    html += '<button class="player-item-delete" onclick="event.stopPropagation(); deletePlayer(' + p.id + ')">✕</button>';
+                    html += '</div>';
+                }
+                list.innerHTML = html;
             }
             
             document.getElementById('totalPlayers').textContent = players.length;
             
-            // Средний ранг
             if (players.length > 0) {
-                const rankOrder = ['silver1','silver2','silver3','silver4','silverE','silverEM',
-                    'gold1','gold2','gold3','goldM','mg1','mg2','mge','dmg','le','lem','smfc','global'];
-                const avgIndex = Math.round(players.reduce((sum, p) => 
-                    sum + rankOrder.indexOf(p.rankValue), 0) / players.length);
-                const avgRankPlayer = players.find(p => 
-                    rankOrder.indexOf(p.rankValue) === avgIndex) || players[0];
+                var rankOrder = ['silver1','silver2','silver3','silver4','silverE','silverEM','gold1','gold2','gold3','goldM','mg1','mg2','mge','dmg','le','lem','smfc','global'];
+                var sum = 0;
+                for (var i = 0; i < players.length; i++) {
+                    sum += rankOrder.indexOf(players[i].rankValue);
+                }
+                var avgIndex = Math.round(sum / players.length);
+                var avgRankPlayer = null;
+                for (var i = 0; i < players.length; i++) {
+                    if (rankOrder.indexOf(players[i].rankValue) === avgIndex) {
+                        avgRankPlayer = players[i];
+                        break;
+                    }
+                }
+                if (!avgRankPlayer) avgRankPlayer = players[0];
                 document.getElementById('avgRank').textContent = avgRankPlayer ? avgRankPlayer.rankIcon : '-';
             } else {
                 document.getElementById('avgRank').textContent = '-';
@@ -1077,21 +1087,22 @@
         }
         
         function loadPlayerToCard(id) {
-            const player = players.find(p => p.id === id);
+            var player = null;
+            for (var i = 0; i < players.length; i++) {
+                if (players[i].id === id) {
+                    player = players[i];
+                    break;
+                }
+            }
             if (player) {
                 document.getElementById('playerNick').value = player.nick;
                 playerAvatarSrc = player.playerAvatar;
                 
-                // Устанавливаем ранг
-                const rankInput = document.querySelector(`input[name="rank"][value="${player.rankValue}"]`);
+                var rankInput = document.querySelector('input[name="rank"][value="' + player.rankValue + '"]');
                 if (rankInput) rankInput.checked = true;
                 
-                // Обновляем превью аватара игрока
                 if (player.playerAvatar) {
-                    document.getElementById('playerAvatarUpload').innerHTML = `
-                        <img src="${player.playerAvatar}" alt="Player Avatar">
-                        <input type="file" id="playerAvatar" accept="image/*">
-                    `;
+                    document.getElementById('playerAvatarUpload').innerHTML = '<img src="' + player.playerAvatar + '" alt="Player Avatar"><input type="file" id="playerAvatar" accept="image/*">';
                     setupPlayerAvatarUpload();
                 }
                 
@@ -1100,28 +1111,33 @@
         }
         
         function deletePlayer(id) {
-            players = players.filter(p => p.id !== id);
+            var newPlayers = [];
+            for (var i = 0; i < players.length; i++) {
+                if (players[i].id !== id) {
+                    newPlayers.push(players[i]);
+                }
+            }
+            players = newPlayers;
             updatePlayerList();
         }
         
         function saveCard() {
-            const card = document.getElementById('playerCard');
+            var card = document.getElementById('playerCard');
             
             html2canvas(card, {
                 backgroundColor: null,
                 scale: 2,
                 useCORS: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                const nick = document.getElementById('cardPlayerNick').textContent || 'player';
-                const team = document.getElementById('cardTeamName').textContent || 'team';
-                link.download = `${team}_${nick}_prostrike.png`;
+            }).then(function(canvas) {
+                var link = document.createElement('a');
+                var nick = document.getElementById('cardPlayerNick').textContent || 'player';
+                var team = document.getElementById('cardTeamName').textContent || 'team';
+                link.download = team + '_' + nick + '_prostrike.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         }
         
-        // Инициализация
         updateCard();
     </script>
 </body>
