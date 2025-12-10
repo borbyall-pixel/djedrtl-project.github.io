@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROSTRIKE REBORN Team Generator</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff6b00, #ffd500, #ff6b00);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        
+        .header p {
+            color: #888;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        .panel {
+            background: linear-gradient(145deg, rgba(30, 30, 50, 0.9), rgba(20, 20, 35, 0.95));
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            color: #ff6b00;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .panel-title::before {
+            content: '';
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, #ff6b00, #ffd500);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 107, 0, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6b00;
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+        }
+        
+        .form-group input[type="text"]::placeholder {
+            color: #555;
+        }
+        
+        .avatar-uploads {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .file-upload {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            border: 2px dashed rgba(255, 107, 0, 0.4);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .file-upload:hover {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        .file-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .file-upload-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .file-upload-text {
+            color: #888;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        
+        .file-upload img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+        
+        .file-upload.round {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        
+        .file-upload.round img {
+            border-radius: 50%;
+        }
+        
+        .rank-category {
+            margin-bottom: 15px;
+        }
+        
+        .rank-category-title {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-left: 5px;
+            border-left: 3px solid;
+        }
+        
+        .rank-category-title.silver { border-color: #a8a8a8; color: #a8a8a8; }
+        .rank-category-title.gold { border-color: #ffd700; color: #ffd700; }
+        .rank-category-title.master { border-color: #c9a227; color: #c9a227; }
+        .rank-category-title.high { border-color: #00bfff; color: #00bfff; }
+        
+        .rank-select {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .rank-option {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .rank-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .rank-option .rank-card {
+            padding: 10px 6px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .rank-option input:checked + .rank-card {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.15);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+        }
+        
+        .rank-option .rank-card:hover {
+            border-color: rgba(255, 107, 0, 0.5);
+        }
+        
+        .rank-icon {
+            font-size: 1.5rem;
+            margin-bottom: 3px;
+        }
+        
+        .rank-name {
+            font-size: 0.6rem;
+            color: #aaa;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Russo One', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            color: #fff;
+            box-shadow: 0 5px 30px rgba(255, 107, 0, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.6);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #2d2d4a, #1a1a2e);
+            color: #ff6b00;
+            border: 2px solid #ff6b00;
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 107, 0, 0.1);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #4a2d2d, #2e1a1a);
+            color: #ff5050;
+            border: 2px solid #ff5050;
+            margin-top: 15px;
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 80, 80, 0.1);
+        }
+        
+        /* Player Card Preview */
+        .preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #playerCard {
+            width: 350px;
+            height: 450px;
+            background: linear-gradient(145deg, #1e1e32 0%, #0d0d15 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(255, 107, 0, 0.1);
+        }
+        
+        .card-bg-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 107, 0, 0.02) 10px,
+                    rgba(255, 107, 0, 0.02) 20px
+                );
+        }
+        
+        .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 107, 0, 0.15), transparent 50%);
+            pointer-events: none;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+        }
+        
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            overflow: hidden;
+            border: 2px solid rgba(255, 107, 0, 0.5);
+        }
+        
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-info {
+            flex: 1;
+        }
+        
+        .team-name {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            line-height: 1.2;
+        }
+        
+        .team-tag {
+            font-size: 0.8rem;
+            color: #ff6b00;
+            text-transform: uppercase;
+        }
+        
+        .player-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        
+        .player-avatar-frame {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b00, #ffd500);
+            padding: 4px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 40px rgba(255, 107, 0, 0.4);
+        }
+        
+        .player-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #2a2a45, #1a1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+        }
+        
+        .player-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .player-nickname {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .player-rank {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+        }
+        
+        .player-rank-icon {
+            font-size: 1.8rem;
+        }
+        
+        .player-rank-name {
+            font-size: 0.9rem;
+            color: #ffd500;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .card-footer {
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 107, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-footer-text {
+            font-size: 0.7rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .game-badge {
+            padding: 5px 10px;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            border-radius: 5px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Team List */
+        .team-list {
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .team-list-title {
+            font-family: 'Russo One', sans-serif;
+            color: #ff6b00;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .player-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .player-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+        
+        .player-list::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 5px;
+        }
+        
+        .player-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .player-item:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        .player-item-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            overflow: hidden;
+            border: 2px solid rgba(255, 107, 0, 0.5);
+            flex-shrink: 0;
+        }
+        
+        .player-item-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .player-item-rank {
+            font-size: 1.3rem;
+        }
+        
+        .player-item-info {
+            flex: 1;
+        }
+        
+        .player-item-name {
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .player-item-rankname {
+            font-size: 0.75rem;
+            color: #888;
+        }
+        
+        .player-item-delete {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(255, 50, 50, 0.2);
+            border: none;
+            color: #ff5050;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .player-item-delete:hover {
+            background: rgba(255, 50, 50, 0.4);
+        }
+        
+        .empty-team {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .stat-badge {
+            flex: 1;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.2rem;
+            color: #ff6b00;
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .upload-label {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ PROSTRIKE REBORN TEAM BUILDER ⚡</h1>
+            <p>Создай свою легендарную команду</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="panel">
+                <div class="panel-title">Добавить игрока</div>
+                
+                <div class="form-group">
+                    <label>Название команды</label>
+                    <input type="text" id="teamName" placeholder="NAVI, FaZe, G2..." value="LEGENDS">
+                </div>
+                
+                <div class="form-group">
+                    <label>Аватары</label>
+                    <div class="avatar-uploads">
+                        <div>
+                            <div class="file-upload" id="teamAvatarUpload">
+                                <div class="file-upload-icon">🏆</div>
+                                <div class="file-upload-text">Команда</div>
+                                <input type="file" id="teamAvatar" accept="image/*">
+                            </div>
+                            <div class="upload-label">Лого команды</div>
+                        </div>
+                        <div>
+                            <div class="file-upload round" id="playerAvatarUpload">
+                                <div class="file-upload-icon">👤</div>
+                                <div class="file-upload-text">Игрок</div>
+                                <input type="file" id="playerAvatar" accept="image/*">
+                            </div>
+                            <div class="upload-label">Фото игрока</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Никнейм игрока</label>
+                    <input type="text" id="playerNick" placeholder="s1mple, NiKo, m0NESY...">
+                </div>
+                
+                <div class="form-group">
+                    <label>Звание</label>
+                    
+                    <!-- СЕРЕБРО -->
+                    <div class="rank-category">
+                        <div class="rank-category-title silver">Серебро</div>
+                        <div class="rank-select">
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silver1" data-icon="🔘" data-name="Silver I">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро 1</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silver2" data-icon="🔘" data-name="Silver II">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро 2</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silver3" data-icon="🔘" data-name="Silver III">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро 3</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silver4" data-icon="🔘" data-name="Silver IV">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро 4</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silverE" data-icon="🔘" data-name="Silver Elite">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро Элита</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="silverEM" data-icon="🔘" data-name="Silver Elite Master">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔘</div>
+                                    <div class="rank-name">Серебро Магистр</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- ЗОЛОТО -->
+                    <div class="rank-category">
+                        <div class="rank-category-title gold">Золотая звезда</div>
+                        <div class="rank-select">
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="gold1" data-icon="⭐" data-name="Gold Nova I">
+                                <div class="rank-card">
+                                    <div class="rank-icon">⭐</div>
+                                    <div class="rank-name">Голд Нова 1</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="gold2" data-icon="⭐" data-name="Gold Nova II">
+                                <div class="rank-card">
+                                    <div class="rank-icon">⭐</div>
+                                    <div class="rank-name">Голд Нова 2</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="gold3" data-icon="⭐" data-name="Gold Nova III">
+                                <div class="rank-card">
+                                    <div class="rank-icon">⭐</div>
+                                    <div class="rank-name">Голд Нова 3</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="goldM" data-icon="⭐" data-name="Gold Nova Master">
+                                <div class="rank-card">
+                                    <div class="rank-icon">⭐</div>
+                                    <div class="rank-name">Голд Магистр</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- МАГИСТР-ХРАНИТЕЛЬ -->
+                    <div class="rank-category">
+                        <div class="rank-category-title master">Магистр-хранитель</div>
+                        <div class="rank-select">
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="mg1" data-icon="🔫" data-name="Master Guardian I">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔫</div>
+                                    <div class="rank-name">МГ 1 (Калаш)</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="mg2" data-icon="🔫" data-name="Master Guardian II">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔫🌿</div>
+                                    <div class="rank-name">МГ 2 (Венки)</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="mge" data-icon="🔫🔫" data-name="Master Guardian Elite">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🔫🔫</div>
+                                    <div class="rank-name">МГ Элита</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="dmg" data-icon="✴️" data-name="Distinguished Master Guardian">
+                                <div class="rank-card">
+                                    <div class="rank-icon">✴️</div>
+                                    <div class="rank-name">Заслуженный МГ</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- ВЫСОКИЕ РАНГИ -->
+                    <div class="rank-category">
+                        <div class="rank-category-title high">Высокие ранги</div>
+                        <div class="rank-select">
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="le" data-icon="🦅" data-name="Legendary Eagle">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🦅</div>
+                                    <div class="rank-name">Беркут</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="lem" data-icon="🦅" data-name="Legendary Eagle Master">
+                                <div class="rank-card">
+                                    <div class="rank-icon">🦅🌿</div>
+                                    <div class="rank-name">Беркут-магистр</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="smfc" data-icon="💀" data-name="Supreme Master First Class">
+                                <div class="rank-card">
+                                    <div class="rank-icon">💀</div>
+                                    <div class="rank-name">Суприм</div>
+                                </div>
+                            </label>
+                            <label class="rank-option">
+                                <input type="radio" name="rank" value="global" data-icon="🌍" data-name="The Global Elite" checked>
+                                <div class="rank-card">
+                                    <div class="rank-icon">🌍</div>
+                                    <div class="rank-name">Глобал Элита</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="addPlayer()">
+                    ➕ Добавить игрока
+                </button>
+                <button class="btn btn-secondary" onclick="saveCard()">
+                    📥 Скачать карточку PNG
+                </button>
+                <button class="btn btn-danger" onclick="clearPlayerAvatar()">
+                    🗑️ Очистить аву игрока
+                </button>
+            </div>
+            
+            <div class="panel preview-area">
+                <div class="panel-title">Превью карточки</div>
+                
+                <div id="playerCard">
+                    <div class="card-bg-pattern"></div>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="team-avatar" id="cardTeamAvatar">
+                                🎮
+                            </div>
+                            <div class="team-info">
+                                <div class="team-name" id="cardTeamName">LEGENDS</div>
+                                <div class="team-tag">ESPORTS TEAM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="player-section">
+                            <div class="player-avatar-frame">
+                                <div class="player-avatar" id="cardPlayerAvatar">
+                                    🎯
+                                </div>
+                            </div>
+                            <div class="player-nickname" id="cardPlayerNick">PLAYER</div>
+                            <div class="player-rank">
+                                <span class="player-rank-icon" id="cardRankIcon">🌍</span>
+                                <span class="player-rank-name" id="cardRankName">THE GLOBAL ELITE</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <span class="card-footer-text">TEAM MEMBER</span>
+                            <span class="game-badge">PROSTRIKE REBORN</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-list">
+                    <div class="team-list-title">👥 Состав команды</div>
+                    <div class="player-list" id="playerList">
+                        <div class="empty-team">Добавь первого игрока!</div>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-badge">
+                            <div class="stat-value" id="totalPlayers">0</div>
+                            <div class="stat-label">Игроков</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div class="stat-value" id="avgRank">-</div>
+                            <div class="stat-label">Avg Rank</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let players = [];
+        let teamAvatarSrc = null;
+        let playerAvatarSrc = null;
+        
+        // Загрузка аватара команды
+        function setupTeamAvatarUpload() {
+            document.getElementById('teamAvatar').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        teamAvatarSrc = e.target.result;
+                        document.getElementById('teamAvatarUpload').innerHTML = `
+                            <img src="${teamAvatarSrc}" alt="Team Avatar">
+                            <input type="file" id="teamAvatar" accept="image/*">
+                        `;
+                        setupTeamAvatarUpload();
+                        updateCard();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Загрузка аватара игрока
+        function setupPlayerAvatarUpload() {
+            document.getElementById('playerAvatar').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        playerAvatarSrc = e.target.result;
+                        document.getElementById('playerAvatarUpload').innerHTML = `
+                            <img src="${playerAvatarSrc}" alt="Player Avatar">
+                            <input type="file" id="playerAvatar" accept="image/*">
+                        `;
+                        setupPlayerAvatarUpload();
+                        updateCard();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        setupTeamAvatarUpload();
+        setupPlayerAvatarUpload();
+        
+        // Обновление превью при вводе
+        document.getElementById('teamName').addEventListener('input', updateCard);
+        document.getElementById('playerNick').addEventListener('input', updateCard);
+        document.querySelectorAll('input[name="rank"]').forEach(r => {
+            r.addEventListener('change', updateCard);
+        });
+        
+        function updateCard() {
+            const teamName = document.getElementById('teamName').value || 'LEGENDS';
+            const playerNick = document.getElementById('playerNick').value || 'PLAYER';
+            const selectedRank = document.querySelector('input[name="rank"]:checked');
+            
+            document.getElementById('cardTeamName').textContent = teamName;
+            document.getElementById('cardPlayerNick').textContent = playerNick;
+            
+            if (selectedRank) {
+                document.getElementById('cardRankIcon').textContent = selectedRank.dataset.icon;
+                document.getElementById('cardRankName').textContent = selectedRank.dataset.name;
+            }
+            
+            if (teamAvatarSrc) {
+                document.getElementById('cardTeamAvatar').innerHTML = `<img src="${teamAvatarSrc}" alt="Team">`;
+            } else {
+                document.getElementById('cardTeamAvatar').innerHTML = '🎮';
+            }
+            
+            if (playerAvatarSrc) {
+                document.getElementById('cardPlayerAvatar').innerHTML = `<img src="${playerAvatarSrc}" alt="Player">`;
+            } else {
+                document.getElementById('cardPlayerAvatar').innerHTML = '🎯';
+            }
+        }
+        
+        function clearPlayerAvatar() {
+            playerAvatarSrc = null;
+            document.getElementById('playerAvatarUpload').innerHTML = `
+                <div class="file-upload-icon">👤</div>
+                <div class="file-upload-text">Игрок</div>
+                <input type="file" id="playerAvatar" accept="image/*">
+            `;
+            setupPlayerAvatarUpload();
+            updateCard();
+        }
+        
+        function addPlayer() {
+            const nick = document.getElementById('playerNick').value.trim();
+            if (!nick) {
+                alert('Введи никнейм игрока!');
+                return;
+            }
+            
+            const selectedRank = document.querySelector('input[name="rank"]:checked');
+            const teamName = document.getElementById('teamName').value || 'LEGENDS';
+            
+            const player = {
+                id: Date.now(),
+                nick: nick,
+                rankValue: selectedRank.value,
+                rankIcon: selectedRank.dataset.icon,
+                rankName: selectedRank.dataset.name,
+                teamName: teamName,
+                teamAvatar: teamAvatarSrc,
+                playerAvatar: playerAvatarSrc
+            };
+            
+            players.push(player);
+            updatePlayerList();
+            document.getElementById('playerNick').value = '';
+            
+            // Очищаем аву игрока для следующего
+            clearPlayerAvatar();
+            
+            // Анимация
+            document.getElementById('playerCard').style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                document.getElementById('playerCard').style.transform = 'scale(1)';
+            }, 200);
+        }
+        
+        function updatePlayerList() {
+            const list = document.getElementById('playerList');
+            
+            if (players.length === 0) {
+                list.innerHTML = '<div class="empty-team">Добавь первого игрока!</div>';
+            } else {
+                list.innerHTML = players.map(p => `
+                    <div class="player-item" onclick="loadPlayerToCard(${p.id})">
+                        <div class="player-item-avatar">
+                            ${p.playerAvatar ? `<img src="${p.playerAvatar}" alt="${p.nick}">` : '👤'}
+                        </div>
+                        <span class="player-item-rank">${p.rankIcon}</span>
+                        <div class="player-item-info">
+                            <div class="player-item-name">${p.nick}</div>
+                            <div class="player-item-rankname">${p.rankName}</div>
+                        </div>
+                        <button class="player-item-delete" onclick="event.stopPropagation(); deletePlayer(${p.id})">✕</button>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('totalPlayers').textContent = players.length;
+            
+            // Средний ранг
+            if (players.length > 0) {
+                const rankOrder = ['silver1','silver2','silver3','silver4','silverE','silverEM',
+                    'gold1','gold2','gold3','goldM','mg1','mg2','mge','dmg','le','lem','smfc','global'];
+                const avgIndex = Math.round(players.reduce((sum, p) => 
+                    sum + rankOrder.indexOf(p.rankValue), 0) / players.length);
+                const avgRankPlayer = players.find(p => 
+                    rankOrder.indexOf(p.rankValue) === avgIndex) || players[0];
+                document.getElementById('avgRank').textContent = avgRankPlayer ? avgRankPlayer.rankIcon : '-';
+            } else {
+                document.getElementById('avgRank').textContent = '-';
+            }
+        }
+        
+        function loadPlayerToCard(id) {
+            const player = players.find(p => p.id === id);
+            if (player) {
+                document.getElementById('playerNick').value = player.nick;
+                playerAvatarSrc = player.playerAvatar;
+                
+                // Устанавливаем ранг
+                const rankInput = document.querySelector(`input[name="rank"][value="${player.rankValue}"]`);
+                if (rankInput) rankInput.checked = true;
+                
+                // Обновляем превью аватара игрока
+                if (player.playerAvatar) {
+                    document.getElementById('playerAvatarUpload').innerHTML = `
+                        <img src="${player.playerAvatar}" alt="Player Avatar">
+                        <input type="file" id="playerAvatar" accept="image/*">
+                    `;
+                    setupPlayerAvatarUpload();
+                }
+                
+                updateCard();
+            }
+        }
+        
+        function deletePlayer(id) {
+            players = players.filter(p => p.id !== id);
+            updatePlayerList();
+        }
+        
+        function saveCard() {
+            const card = document.getElementById('playerCard');
+            
+            html2canvas(card, {
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                const nick = document.getElementById('cardPlayerNick').textContent || 'player';
+                const team = document.getElementById('cardTeamName').textContent || 'team';
+                link.download = `${team}_${nick}_prostrike.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+        
+        // Инициализация
+        updateCard();
+    </script>
+</body>
+</html>
